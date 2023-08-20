@@ -1,11 +1,15 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
 var express = require("express");
 var app = express();
 var mysql = require("mysql");
 dataFromDb = "dataFromDb update: ";
 var con = mysql.createConnection({
-  host: "tan-data-base-1.co2qppnbbqvy.ap-southeast-1.rds.amazonaws.com",
-  user: "admin",
-  password: "12345678",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
 });
 
 con.connect(function (err) {
@@ -14,7 +18,7 @@ con.connect(function (err) {
   con.query("SELECT * FROM new_schema.tan_test", function (err, result) {
     if (err) throw err;
     dataFromDb += JSON.stringify(result);
-    console.log("Result: " + JSON.stringify(result));
+    console.log(`Result: ${process.env.NODE_ENV} : ` + JSON.stringify(result));
   });
 });
 
@@ -47,7 +51,7 @@ app.get("/ab*cd", function (req, res) {
   console.log("Got a GET request for /ab*cd");
   res.send("Page Pattern Match");
 });
-
+console.log(process.env);
 var server = app.listen(process.env.PORT || 3000, function () {
   var host = server.address().address;
   var port = server.address().port;
