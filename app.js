@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var mysql = require("mysql");
-dataFromDb = "dataFromDb: ";
+dataFromDb = "dataFromDb update: ";
 var con = mysql.createConnection({
   host: "tan-data-base-1.co2qppnbbqvy.ap-southeast-1.rds.amazonaws.com",
   user: "admin",
